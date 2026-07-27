@@ -26,23 +26,39 @@
       max-width: 400px;
       width: 100%;
     }
+    .header-image {
+      max-width: 120px; /* Size of your PNG image */
+      height: auto;
+      margin-bottom: 15px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
     h1 {
       font-size: 1.2rem;
       color: #1d3557; /* Royal navy title */
+      margin-top: 0;
       margin-bottom: 20px;
       text-transform: uppercase;
       letter-spacing: 1px;
     }
+    /* Inner quote box */
+    .quote-box-container {
+      background-color: #f0f4f8;
+      border: 1px solid #d9e2ec;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 25px;
+    }
     .quote-text {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       font-weight: 600;
       line-height: 1.5;
       color: #0d1b2a;
-      min-height: 100px;
+      min-height: 90px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 25px;
     }
     button {
       background-color: #1d3557; /* Navy button */
@@ -66,15 +82,23 @@
       font-size: 0.95rem;
       font-weight: 500;
       color: #457b9d; /* Slate blue footer text */
-      line-height: 1.6; /* Adds clean spacing between footer line breaks */
+      line-height: 1.6; /* Spacing between footer line breaks */
     }
   </style>
 </head>
 <body>
 
   <div class="card">
+    <!-- Your uploaded PNG image -->
+    <img src="1070087967294631976-i-1473428054100541450-pc-1462212450077376695-587240.6000000238-removebg-preview.png" alt="Header Image" class="header-image">
+
     <h1>I'm proud of you for taking your meds!</h1>
-    <div class="quote-text" id="quoteBox">Loading quote...</div>
+    
+    <!-- Extra inner box holding the quote -->
+    <div class="quote-box-container">
+      <div class="quote-text" id="quoteBox">Loading quote...</div>
+    </div>
+
     <button onclick="getRandomQuote()">⟳</button>
     <div class="footer">I love you Naomi. <br> Stay consistent, you got this! <br> - Catarina ♥︎ </div>
   </div>
