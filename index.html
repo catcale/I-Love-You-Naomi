@@ -31,15 +31,23 @@
     .header-image {
       max-width: 120px;
       height: auto;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       display: block;
       margin-left: auto;
       margin-right: auto;
     }
+    h1 {
+      font-size: 1.2rem;
+      color: #1d3557;
+      margin-top: 0;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
     
     .meds-btn {
       font-size: 0.95rem;
-      background-color: #1d3557; /* Deep Navy to match theme */
+      background-color: #1d3557; /* Deep Navy theme */
       color: white;
       border: none;
       width: 100%;
@@ -125,9 +133,11 @@
     <!-- Header Image -->
     <img src="./header.png" alt="Header Image" class="header-image">
 
-    <!-- Meds Taken Button above Quote Box -->
-    <button onclick="triggerCelebration()" id="takenBtn" class="meds-btn">Meds taken! Text me to let me know ♥︎</button>
-    <div id="statusMsg" class="status-msg">Proud of you! 🥰 Don't forget to text Catarina!</div>
+    <h1>I'm proud of you for taking your meds!</h1>
+
+    <!-- Meds Taken Button -->
+    <button onclick="triggerCelebration()" id="takenBtn" class="meds-btn">Meds taken!</button>
+    <div id="statusMsg" class="status-msg">Text me to let me know please ♥︎</div>
     
     <!-- Clean Styled Quote Box -->
     <div class="quote-box">
