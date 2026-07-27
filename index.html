@@ -12,7 +12,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       margin: 0;
       padding: 20px;
       box-sizing: border-box;
@@ -20,14 +20,14 @@
     }
     .card {
       background: #ffffff;
-      padding: 30px;
-      border-radius: 20px;
+      padding: 35px;
+      border-radius: 24px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-      max-width: 400px;
+      max-width: 650px; /* Expanded card width to comfortably fit the giant letter */
       width: 100%;
     }
     .header-image {
-      max-width: 120px;
+      max-width: 140px;
       height: auto;
       margin-bottom: 15px;
       display: block;
@@ -35,7 +35,7 @@
       margin-right: auto;
     }
     h1 {
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       color: #1d3557;
       margin-top: 0;
       margin-bottom: 20px;
@@ -43,24 +43,24 @@
       letter-spacing: 1px;
     }
     
-    /* Letter PNG Background Container */
+    /* 3x LARGER LETTER CONTAINER */
     .quote-box-container {
       background-image: url('./letter.png');
       background-size: contain;
       background-position: center;
       background-repeat: no-repeat;
-      padding: 35px 25px;
+      padding: 80px 50px; /* Extra padding keeps text neatly centered inside the large graphic */
       margin-bottom: 25px;
-      min-height: 180px;
+      min-height: 540px; /* Scaled up ~3x from 180px */
       display: flex;
       align-items: center;
       justify-content: center;
       box-sizing: border-box;
     }
     .quote-text {
-      font-size: 1.1rem;
+      font-size: 1.35rem; /* Slightly larger text so it fills the big letter nicely */
       font-weight: 600;
-      line-height: 1.4;
+      line-height: 1.5;
       color: #0d1b2a;
       width: 100%;
     }
@@ -69,8 +69,8 @@
       background-color: #1d3557;
       color: white;
       border: none;
-      padding: 12px 24px;
-      font-size: 1.2rem;
+      padding: 14px 28px;
+      font-size: 1.3rem;
       border-radius: 25px;
       cursor: pointer;
       font-weight: bold;
@@ -99,7 +99,7 @@
 
     <h1>I'm proud of you for taking your meds!</h1>
     
-    <!-- Quote Container with letter.png as background -->
+    <!-- 3x Larger Letter PNG Box -->
     <div class="quote-box-container">
       <div class="quote-text" id="quoteBox">Loading quote...</div>
     </div>
