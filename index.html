@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>I Love You Naomi</title>
+  <!-- Canvas Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -64,6 +66,13 @@
       font-style: italic;
     }
     
+    .action-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      align-items: center;
+    }
+
     button {
       background-color: #1d3557;
       color: white;
@@ -75,10 +84,32 @@
       font-weight: bold;
       transition: background-color 0.2s, transform 0.1s;
     }
+
+    .meds-btn {
+      font-size: 0.95rem;
+      background-color: #2a9d8f;
+      width: 100%;
+      padding: 14px 20px;
+    }
+
     button:active {
       transform: scale(0.98);
       background-color: #457b9d;
     }
+
+    .status-msg {
+      font-size: 0.95rem;
+      color: #2a9d8f;
+      font-weight: bold;
+      display: none;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .footer {
       margin-top: 30px;
       padding-top: 15px;
@@ -103,7 +134,12 @@
       <div class="quote-text" id="quoteBox">Loading quote...</div>
     </div>
 
-    <button onclick="getRandomQuote()">⟳</button>
+    <div class="action-container">
+      <button onclick="getRandomQuote()" title="New Quote">⟳</button>
+      <button onclick="triggerCelebration()" id="takenBtn" class="meds-btn">Meds taken! Text me to let me know ♥︎</button>
+      <div id="statusMsg" class="status-msg">Proud of you! 🥰 Don't forget to text Catarina!</div>
+    </div>
+
     <div class="footer">I love you Naomi. <br> Stay consistent, you got this! <br> - Catarina ♥︎ </div>
   </div>
 
@@ -146,7 +182,7 @@ const quotes = [
   "Good things are coming your way, stay open to them, don't overthink the bad days.",
   "You bring the best in people around you.",
   "You are a ray of sunshine on a cloudy day.",
-// bible quotes
+  // bible quotes
   "I can do all things through Christ who gives me strength. — Philippians 4:13",
   "Do you not know that your bodies are temples of the Holy Spirit? Honor God with your body. — 1 Corinthians 6:19-20",
   "She clothes herself with strength and dignity, and she laughs without fear of the future. — Proverbs 31:25",
@@ -192,6 +228,23 @@ const quotes = [
 
       currentQuoteIndex = newIndex;
       document.getElementById('quoteBox').innerText = `"${quotes[currentQuoteIndex]}"`;
+    }
+
+    function triggerCelebration() {
+      // Launch Confetti Particles
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+
+      // Update UI
+      const btn = document.getElementById('takenBtn');
+      const msg = document.getElementById('statusMsg');
+
+      btn.innerText = "Completed ✓";
+      btn.style.backgroundColor = "#457b9d";
+      msg.style.display = "block";
     }
 
     // Displays a random quote as soon as the page loads
