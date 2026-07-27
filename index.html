@@ -108,26 +108,47 @@
   </div>
 
   <script>
-    const quotes = [
-      "You're doing great, and I'm so proud of you every day.",
-      "Hope your day is as bright and wonderful as your smile.",
-      "Just a reminder: you are loved, appreciated, and cherished.",
-      "One step at a time — you've got this!",
-      "I love you more than coffee, and that's saying a lot."
-    ];
+const quotes = [
+  "You make the world brighter just by being in it.",
+  "I'll always be here, cheering you on.",
+  "Whatever tomorrow brings, you got it, always.",
+  "Taking care of yourself is the best gift you can give your loved ones.",
+  "I'm so proud of the effort you put in every day.",
+  "You are stronger and kinder than you give yourself credit for.",
+  "You are deeply and endlessly loved,",
+  "No matter how tough a day gets, remember you will never be alone.",
+  "Keep taking care of yourself, thriving and growing.",
+  "You're doing so good, you're doing better than you think you are.",
+  "Every little routine you build is a big step towards your goals.",
+  "Be kind to yourself as you are to everyone else.",
+  "Trust the process even on slow days.",
+  "Keep showing up for yourself even in small ways.",
+  "You are building a healthier, stronger version of yourself every day.",
+  "Tiny habits make massive difference overtime.",
+  "Give yourself credit for simply showing up today.",
+  "Keep going, you're always a step closer than yesterday.",
+  "Your peace of mind is always worth prioritizing.",
+  "Be patient with yourself, everything takes time.",
+  "Honor your pace, you don't have to race anyone else.",
+  "Your feelings are valid but they don't define you or your future.",
+  "Give yourself the grace you so freely give to others.",
+  "In the middle of difficulty lies opportunity.",
+  "You don't need to stay positive every second, just keep caring for yourself.",
+  "You aren't selfish for prioritizing yourself, self care is essential.",
+  "Give yourself time, flowers don't bloom overnight.",
+  "You are allowed to take up space and prioritize your wellness.",
+  "Always believe you can, you can do and achieve anything.",
+  "You are stronger than your doubts.",
+  "You are capable of doing amazing things.",
+  "Your effort never goes unnoticed.",
+  "Radiate positivity, and it will come back to you tenfold.",
+  "Keep shining, the world needs your kind of light.",
+  "Good things are coming your way, stay open to them, don't overthink the bad days.",
+  "You bring the best in people around you.",
+  "You are a ray of sunshine on a cloudy day.",
+];
 
     let currentQuoteIndex = -1;
-
-    function getDailyQuote() {
-      const now = new Date();
-      const start = new Date(now.getFullYear(), 0, 0);
-      const diff = now - start;
-      const oneDay = 1000 * 60 * 60 * 24;
-      const dayOfYear = Math.floor(diff / oneDay);
-      
-      currentQuoteIndex = dayOfYear % quotes.length;
-      document.getElementById('quoteBox').innerText = `"${quotes[currentQuoteIndex]}"`;
-    }
 
     function getRandomQuote() {
       if (quotes.length <= 1) return;
@@ -141,7 +162,8 @@
       document.getElementById('quoteBox').innerText = `"${quotes[currentQuoteIndex]}"`;
     }
 
-    getDailyQuote();
+    // Displays a random quote as soon as the page loads
+    getRandomQuote();
   </script>
 
 </body>
