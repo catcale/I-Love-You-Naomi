@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Quote for You ❤️</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff0f3;
+      color: #590d22;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      padding: 20px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+    .card {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      max-width: 400px;
+      width: 100%;
+    }
+    h1 {
+      font-size: 1.2rem;
+      color: #ff4d6d;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .quote-text {
+      font-size: 1.4rem;
+      font-weight: 600;
+      line-height: 1.5;
+      min-height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 25px;
+    }
+    button {
+      background-color: #ff4d6d;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+    button:active {
+      transform: scale(0.98);
+      background-color: #c9184a;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>Proud of you for taking your meds! ✨</h1>
+    <div class="quote-text" id="quoteBox">Loading quote...</div>
+    <button onclick="getRandomQuote()">Surprise Me 🎲</button>
+  </div>
+
+  <script>
+    // Add all your personal quotes inside quotes below:
+    const quotes = [
+      "You're doing great, and I'm so proud of you every day.",
+      "Hope your day is as bright and wonderful as your smile.",
+      "Just a reminder: you are loved, appreciated, and cherished.",
+      "One step at a time — you've got this!",
+      "I love you more than coffee, and that's saying a lot."
+    ];
+
+    let currentQuoteIndex = -1;
+
+    function getDailyQuote() {
+      const now = new Date();
+      const start = new Date(now.getFullYear(), 0, 0);
+      const diff = now - start;
+      const oneDay = 1000 * 60 * 60 * 24;
+      const dayOfYear = Math.floor(diff / oneDay);
+      
+      currentQuoteIndex = dayOfYear % quotes.length;
+      document.getElementById('quoteBox').innerText = quotes[currentQuoteIndex];
+    }
+
+    function getRandomQuote() {
+      if (quotes.length <= 1) return;
+      
+      let newIndex;
+      do {
+        newIndex = Math.floor(Math.random() * quotes.length);
+      } while (newIndex === currentQuoteIndex);
+
+      currentQuoteIndex = newIndex;
+      document.getElementById('quoteBox').innerText = quotes[currentQuoteIndex];
+    }
+
+    getDailyQuote();
+  </script>
+
+</body>
+</html>
