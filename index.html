@@ -74,6 +74,82 @@
       animation: fadeIn 0.5s ease-in-out;
     }
 
+    /* Weekly Tracker Styles */
+    .weekly-tracker-container {
+      margin-bottom: 25px;
+    }
+
+    .tracker-title {
+      font-size: 0.85rem;
+      font-weight: bold;
+      color: #1d3557;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .weekly-tracker {
+      display: flex;
+      justify-content: space-between;
+      background-color: #f8f9fa;
+      padding: 12px 16px;
+      border-radius: 12px;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.03);
+    }
+
+    .day-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .day-label {
+      font-size: 0.8rem;
+      font-weight: bold;
+      color: #1d3557;
+    }
+
+    .day-checkbox {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 2px solid #1d3557;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.2s, border-color 0.2s, transform 0.1s;
+      background-color: #ffffff;
+    }
+
+    .day-box:active .day-checkbox {
+      transform: scale(0.9);
+    }
+
+    .day-checkbox.checked {
+      background-color: #2a9d8f;
+      border-color: #2a9d8f;
+    }
+
+    .day-checkbox.checked::after {
+      content: '✓';
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    .reset-btn {
+      font-size: 0.75rem;
+      background: none;
+      border: none;
+      color: #8d99ae;
+      text-decoration: underline;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-5px); }
       to { opacity: 1; transform: translateY(0); }
@@ -141,6 +217,21 @@
     </div>
 
     <h1>I'm proud of you! I love you Naomi.</h1>
+
+    <!-- Weekly Checklist Tracker -->
+    <div class="weekly-tracker-container">
+      <div class="tracker-title">Weekly Tracker</div>
+      <div class="weekly-tracker">
+        <div class="day-box" onclick="toggleDay('Mon')"><span class="day-label">M</span><div class="day-checkbox" id="check-Mon"></div></div>
+        <div class="day-box" onclick="toggleDay('Tue')"><span class="day-label">T</span><div class="day-checkbox" id="check-Tue"></div></div>
+        <div class="day-box" onclick="toggleDay('Wed')"><span class="day-label">W</span><div class="day-checkbox" id="check-Wed"></div></div>
+        <div class="day-box" onclick="toggleDay('Thu')"><span class="day-label">T</span><div class="day-checkbox" id="check-Thu"></div></div>
+        <div class="day-box" onclick="toggleDay('Fri')"><span class="day-label">F</span><div class="day-checkbox" id="check-Fri"></div></div>
+        <div class="day-box" onclick="toggleDay('Sat')"><span class="day-label">S</span><div class="day-checkbox" id="check-Sat"></div></div>
+        <div class="day-box" onclick="toggleDay('Sun')"><span class="day-label">S</span><div class="day-checkbox" id="check-Sun"></div></div>
+      </div>
+      <button class="reset-btn" onclick="resetWeek()">Reset Week</button>
+    </div>
     
     <!-- Clean Styled Quote Box -->
     <div class="quote-box">
@@ -153,77 +244,139 @@
   </div>
 
   <script>
-const quotes = [
-  "You make the world brighter just by being in it.",
-  "I'll always be here, cheering you on.",
-  "Whatever tomorrow brings, you got it, always.",
-  "Taking care of yourself is the best gift you can give your loved ones.",
-  "I'm so proud of the effort you put in every day.",
-  "You are stronger and kinder than you give yourself credit for.",
-  "You are deeply and endlessly loved.",
-  "No matter how tough a day gets, remember you will never be alone.",
-  "Keep taking care of yourself, thriving and growing.",
-  "You're doing so good, you're doing better than you think you are.",
-  "Every little routine you build is a big step towards your goals.",
-  "Be kind to yourself as you are to everyone else.",
-  "Trust the process even on slow days.",
-  "Keep showing up for yourself even in small ways.",
-  "You are building a healthier, stronger version of yourself every day.",
-  "Tiny habits make massive difference overtime.",
-  "Give yourself credit for simply showing up today.",
-  "Keep going, you're always a step closer than yesterday.",
-  "Your peace of mind is always worth prioritizing.",
-  "Be patient with yourself, everything takes time.",
-  "Honor your pace, you don't have to race anyone else.",
-  "Your feelings are valid but they don't define you or your future.",
-  "Give yourself the grace you so freely give to others.",
-  "In the middle of difficulty lies opportunity.",
-  "You don't need to stay positive every second, just keep caring for yourself.",
-  "You aren't selfish for prioritizing yourself, self care is essential.",
-  "Give yourself time, flowers don't bloom overnight.",
-  "You are allowed to take up space and prioritize your wellness.",
-  "Always believe you can, you can do and achieve anything.",
-  "You are stronger than your doubts.",
-  "You are capable of doing amazing things.",
-  "Your effort never goes unnoticed.",
-  "Radiate positivity, and it will come back to you tenfold.",
-  "Keep shining, the world needs your kind of light.",
-  "Good things are coming your way, stay open to them, don't overthink the bad days.",
-  "You bring the best in people around you.",
-  "You are a ray of sunshine on a cloudy day.",
-  // bible quotes
-  "I can do all things through Christ who gives me strength. — Philippians 4:13",
-  "Do you not know that your bodies are temples of the Holy Spirit? Honor God with your body. — 1 Corinthians 6:19-20",
-  "She clothes herself with strength and dignity, and she laughs without fear of the future. — Proverbs 31:25",
-  "Cast all your anxiety on Him because He cares for you. — 1 Peter 5:7",
-  "The Lord is my strength and my shield; my heart trusts in Him, and He helps me. — Psalm 28:7",
-  "Peace I leave with you; my peace I give you. Do not let your hearts be troubled. — John 14:27",
-  "God is within her, she will not fall; God will help her at break of day. — Psalm 46:5",
-  "Those who hope in the Lord will renew their strength. They will soar on wings like eagles. — Isaiah 40:31",
-  "Be strong and courageous. Do not be afraid, for the Lord your God goes with you. — Deuteronomy 31:6",
-  "A joyful heart is good medicine, but a crushed spirit dries up the bones. — Proverbs 17:22",
-  "The Lord will fight for you; you need only to be still. — Exodus 14:14",
-  "Do not fear, for I am with you; do not be dismayed, for I am your God. — Isaiah 41:10",
-  "Come to me, all you who are weary and burdened, and I will give you rest. — Matthew 11:28",
-  "For I know the plans I have for you, plans to give you hope and a future. — Jeremiah 29:11",
-  "The Lord bless you and keep you; the Lord make His face shine on you. — Numbers 6:24-25",
-  "I praise you because I am fearfully and wonderfully made; your works are wonderful. — Psalm 139:14",
-  "She sets about her work vigorously; her arms are strong for her tasks. — Proverbs 31:17",
-  "Trust in the Lord with all your heart and lean not on your own understanding. — Proverbs 3:5",
-  "The Lord is near to all who call on Him, to all who call on Him in truth. — Psalm 145:18",
-  "Whenever I am afraid, I will trust in You. — Psalm 56:3",
-  "Be on your guard; stand firm in the faith; be courageous; be strong. — 1 Corinthians 16:13",
-  "Above all else, guard your heart, for everything you do flows from it. — Proverbs 4:23",
-  "The Lord will keep you from all harm—He will watch over your life. — Psalm 121:7",
-  "He restores my soul; He leads in paths of righteousness for His name's sake. — Psalm 23:3",
-  "Let all that you do be done in love. — 1 Corinthians 16:14",
-  "Do not be anxious about anything, but in every situation present your requests to God. — Philippians 4:6",
-  "And the peace of God, which transcends all understanding, will guard your hearts. — Philippians 4:7",
-  "You are altogether beautiful, my darling; there is no flaw in you. — Song of Solomon 4:7",
-  "Be completely humble and gentle; be patient, bearing with one another in love. — Ephesians 4:2",
-  "The Lord is good, a refuge in times of trouble. He cares for those who trust in Him. — Nahum 1:7",
-  "May the God of hope fill you with all joy and peace as you trust in Him. — Romans 15:13",
-];
+    // Configured JSONBin Credentials
+    const BIN_ID = "6a69d336f5f4af5e29d0be8d";
+    const API_KEY = "$2a$10$eBFQ2YzygW4AAi0WcsshQ.Vmn6huPOOVvpCIw5UL/uwKicR7S6X3W";
+
+    let weekData = { Mon: false, Tue: false, Wed: false, Thu: false, Fri: false, Sat: false, Sun: false };
+
+    // Fetch saved checklist from cloud on page load
+    function loadTracker() {
+      fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+        headers: { "X-Master-Key": API_KEY }
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.record) {
+          weekData = data.record;
+          updateTrackerUI();
+        }
+      })
+      .catch(err => console.error("Error loading tracker:", err));
+    }
+
+    // Save checklist updates to cloud
+    function saveTracker() {
+      fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Master-Key": API_KEY
+        },
+        body: JSON.stringify(weekData)
+      })
+      .then(() => updateTrackerUI())
+      .catch(err => console.error("Error saving tracker:", err));
+    }
+
+    function updateTrackerUI() {
+      Object.keys(weekData).forEach(day => {
+        const el = document.getElementById(`check-${day}`);
+        if (el) {
+          if (weekData[day]) {
+            el.classList.add('checked');
+          } else {
+            el.classList.remove('checked');
+          }
+        }
+      });
+    }
+
+    function toggleDay(day) {
+      weekData[day] = !weekData[day];
+      updateTrackerUI();
+      saveTracker();
+    }
+
+    function resetWeek() {
+      if (confirm("Reset the checklist for a new week?")) {
+        Object.keys(weekData).forEach(day => weekData[day] = false);
+        updateTrackerUI();
+        saveTracker();
+      }
+    }
+
+    const quotes = [
+      "You make the world brighter just by being in it.",
+      "I'll always be here, cheering you on.",
+      "Whatever tomorrow brings, you got it, always.",
+      "Taking care of yourself is the best gift you can give your loved ones.",
+      "I'm so proud of the effort you put in every day.",
+      "You are stronger and kinder than you give yourself credit for.",
+      "You are deeply and endlessly loved.",
+      "No matter how tough a day gets, remember you will never be alone.",
+      "Keep taking care of yourself, thriving and growing.",
+      "You're doing so good, you're doing better than you think you are.",
+      "Every little routine you build is a big step towards your goals.",
+      "Be kind to yourself as you are to everyone else.",
+      "Trust the process even on slow days.",
+      "Keep showing up for yourself even in small ways.",
+      "You are building a healthier, stronger version of yourself every day.",
+      "Tiny habits make massive difference overtime.",
+      "Give yourself credit for simply showing up today.",
+      "Keep going, you're always a step closer than yesterday.",
+      "Your peace of mind is always worth prioritizing.",
+      "Be patient with yourself, everything takes time.",
+      "Honor your pace, you don't have to race anyone else.",
+      "Your feelings are valid but they don't define you or your future.",
+      "Give yourself the grace you so freely give to others.",
+      "In the middle of difficulty lies opportunity.",
+      "You don't need to stay positive every second, just keep caring for yourself.",
+      "You aren't selfish for prioritizing yourself, self care is essential.",
+      "Give yourself time, flowers don't bloom overnight.",
+      "You are allowed to take up space and prioritize your wellness.",
+      "Always believe you can, you can do and achieve anything.",
+      "You are stronger than your doubts.",
+      "You are capable of doing amazing things.",
+      "Your effort never goes unnoticed.",
+      "Radiate positivity, and it will come back to you tenfold.",
+      "Keep shining, the world needs your kind of light.",
+      "Good things are coming your way, stay open to them, don't overthink the bad days.",
+      "You bring the best in people around you.",
+      "You are a ray of sunshine on a cloudy day.",
+      // bible quotes
+      "I can do all things through Christ who gives me strength. — Philippians 4:13",
+      "Do you not know that your bodies are temples of the Holy Spirit? Honor God with your body. — 1 Corinthians 6:19-20",
+      "She clothes herself with strength and dignity, and she laughs without fear of the future. — Proverbs 31:25",
+      "Cast all your anxiety on Him because He cares for you. — 1 Peter 5:7",
+      "The Lord is my strength and my shield; my heart trusts in Him, and He helps me. — Psalm 28:7",
+      "Peace I leave with you; my peace I give you. Do not let your hearts be troubled. — John 14:27",
+      "God is within her, she will not fall; God will help her at break of day. — Psalm 46:5",
+      "Those who hope in the Lord will renew their strength. They will soar on wings like eagles. — Isaiah 40:31",
+      "Be strong and courageous. Do not be afraid, for the Lord your God goes with you. — Deuteronomy 31:6",
+      "A joyful heart is good medicine, but a crushed spirit dries up the bones. — Proverbs 17:22",
+      "The Lord will fight for you; you need only to be still. — Exodus 14:14",
+      "Do not fear, for I am with you; do not be dismayed, for I am your God. — Isaiah 41:10",
+      "Come to me, all you who are weary and burdened, and I will give you rest. — Matthew 11:28",
+      "For I know the plans I have for you, plans to give you hope and a future. — Jeremiah 29:11",
+      "The Lord bless you and keep you; the Lord make His face shine on you. — Numbers 6:24-25",
+      "I praise you because I am fearfully and wonderfully made; your works are wonderful. — Psalm 139:14",
+      "She sets about her work vigorously; her arms are strong for her tasks. — Proverbs 31:17",
+      "Trust in the Lord with all your heart and lean not on your own understanding. — Proverbs 3:5",
+      "The Lord is near to all who call on Him, to all who call on Him in truth. — Psalm 145:18",
+      "Whenever I am afraid, I will trust in You. — Psalm 56:3",
+      "Be on your guard; stand firm in the faith; be courageous; be strong. — 1 Corinthians 16:13",
+      "Above all else, guard your heart, for everything you do flows from it. — Proverbs 4:23",
+      "The Lord will keep you from all harm—He will watch over your life. — Psalm 121:7",
+      "He restores my soul; He leads in paths of righteousness for His name's sake. — Psalm 23:3",
+      "Let all that you do be done in love. — 1 Corinthians 16:14",
+      "Do not be anxious about anything, but in every situation present your requests to God. — Philippians 4:6",
+      "And the peace of God, which transcends all understanding, will guard your hearts. — Philippians 4:7",
+      "You are altogether beautiful, my darling; there is no flaw in you. — Song of Solomon 4:7",
+      "Be completely humble and gentle; be patient, bearing with one another in love. — Ephesians 4:2",
+      "The Lord is good, a refuge in times of trouble. He cares for those who trust in Him. — Nahum 1:7",
+      "May the God of hope fill you with all joy and peace as you trust in Him. — Romans 15:13",
+    ];
 
     let currentQuoteIndex = -1;
 
@@ -240,7 +393,7 @@ const quotes = [
     }
 
     function triggerCelebration() {
-      // Launch Confetti Particles
+      // Launch Confetti
       confetti({
         particleCount: 100,
         spread: 70,
@@ -256,8 +409,9 @@ const quotes = [
       msg.style.display = "block";
     }
 
-    // Displays a random quote as soon as the page loads
+    // Initialize
     getRandomQuote();
+    loadTracker();
   </script>
 
 </body>
