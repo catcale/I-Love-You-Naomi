@@ -66,6 +66,7 @@
       padding: 12px 16px;
       border-radius: 12px;
       box-shadow: inset 0 2px 4px rgba(0,0,0,0.03);
+      position: relative; /* Added for popup absolute positioning */
     }
 
     .day-box {
@@ -75,6 +76,7 @@
       gap: 6px;
       cursor: pointer;
       user-select: none;
+      position: relative; /* Container anchor for float popup */
     }
 
     .day-label {
@@ -110,6 +112,40 @@
       color: white;
       font-size: 15px;
       font-weight: bold;
+    }
+
+    /* Floating Popup Animation */
+    .float-popup {
+      position: absolute;
+      top: -22px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.75rem;
+      font-weight: bold;
+      color: #457b9d;
+      white-space: nowrap;
+      pointer-events: none;
+      animation: floatUpFade 1.2s ease-out forwards;
+      z-index: 10;
+    }
+
+    @keyframes floatUpFade {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, 5px);
+      }
+      20% {
+        opacity: 1;
+        transform: translate(-50%, -5px);
+      }
+      80% {
+        opacity: 1;
+        transform: translate(-50%, -15px);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -25px);
+      }
     }
 
     .reset-btn {
@@ -184,13 +220,13 @@
     <div class="weekly-tracker-container">
       <div class="tracker-title">Medication tracker</div>
       <div class="weekly-tracker" id="tracker">
-        <div class="day-box" onclick="toggleDay('Mon')"><span class="day-label">M</span><div class="day-checkbox" id="check-Mon"></div></div>
-        <div class="day-box" onclick="toggleDay('Tue')"><span class="day-label">T</span><div class="day-checkbox" id="check-Tue"></div></div>
-        <div class="day-box" onclick="toggleDay('Wed')"><span class="day-label">W</span><div class="day-checkbox" id="check-Wed"></div></div>
-        <div class="day-box" onclick="toggleDay('Thu')"><span class="day-label">T</span><div class="day-checkbox" id="check-Thu"></div></div>
-        <div class="day-box" onclick="toggleDay('Fri')"><span class="day-label">F</span><div class="day-checkbox" id="check-Fri"></div></div>
-        <div class="day-box" onclick="toggleDay('Sat')"><span class="day-label">S</span><div class="day-checkbox" id="check-Sat"></div></div>
-        <div class="day-box" onclick="toggleDay('Sun')"><span class="day-label">S</span><div class="day-checkbox" id="check-Sun"></div></div>
+        <div class="day-box" id="box-Mon" onclick="toggleDay('Mon')"><span class="day-label">M</span><div class="day-checkbox" id="check-Mon"></div></div>
+        <div class="day-box" id="box-Tue" onclick="toggleDay('Tue')"><span class="day-label">T</span><div class="day-checkbox" id="check-Tue"></div></div>
+        <div class="day-box" id="box-Wed" onclick="toggleDay('Wed')"><span class="day-label">W</span><div class="day-checkbox" id="check-Wed"></div></div>
+        <div class="day-box" id="box-Thu" onclick="toggleDay('Thu')"><span class="day-label">T</span><div class="day-checkbox" id="check-Thu"></div></div>
+        <div class="day-box" id="box-Fri" onclick="toggleDay('Fri')"><span class="day-label">F</span><div class="day-checkbox" id="check-Fri"></div></div>
+        <div class="day-box" id="box-Sat" onclick="toggleDay('Sat')"><span class="day-label">S</span><div class="day-checkbox" id="check-Sat"></div></div>
+        <div class="day-box" id="box-Sun" onclick="toggleDay('Sun')"><span class="day-label">S</span><div class="day-checkbox" id="check-Sun"></div></div>
       </div>
       <button class="reset-btn" onclick="resetWeek()">Reset Week</button>
     </div>
@@ -255,6 +291,22 @@
       });
     }
 
+    function showFloatPopup(day) {
+      const container = document.getElementById(`box-${day}`);
+      if (!container) return;
+
+      const popup = document.createElement('div');
+      popup.className = 'float-popup';
+      popup.innerText = 'good girl';
+      
+      container.appendChild(popup);
+
+      // Clean up DOM after animation completes
+      setTimeout(() => {
+        popup.remove();
+      }, 1200);
+    }
+
     function toggleDay(day) {
       const willBeChecked = !weekData[day];
       weekData[day] = willBeChecked;
@@ -262,11 +314,11 @@
       // 1. Instantly show the change
       updateTrackerUI();
 
-      // 2. If she is checking a box, trigger confetti and delay the save slightly
-      // This makes the UI feel more responsive during the celebration.
+      // 2. If checking a day: trigger confetti, float popup, and save
       if (willBeChecked) {
+        showFloatPopup(day);
         triggerConfettiOnTracker();
-        setTimeout(saveTracker, 800); // Save after confetti starts
+        setTimeout(saveTracker, 800);
       } else {
         // If unchecking, save instantly
         saveTracker();
