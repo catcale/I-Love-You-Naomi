@@ -50,15 +50,6 @@
       margin-bottom: 25px;
     }
 
-    .tracker-title {
-      font-size: 0.85rem;
-      font-weight: bold;
-      color: #1d3557;
-      margin-bottom: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
     .weekly-tracker {
       display: flex;
       justify-content: space-between;
@@ -218,7 +209,6 @@
 
     <!-- Weekly Checklist Tracker -->
     <div class="weekly-tracker-container">
-      <div class="tracker-title">Medication tracker</div>
       <div class="weekly-tracker" id="tracker">
         <div class="day-box" id="box-Mon" onclick="toggleDay('Mon')"><span class="day-label">M</span><div class="day-checkbox" id="check-Mon"></div></div>
         <div class="day-box" id="box-Tue" onclick="toggleDay('Tue')"><span class="day-label">T</span><div class="day-checkbox" id="check-Tue"></div></div>
@@ -297,7 +287,7 @@
 
       const popup = document.createElement('div');
       popup.className = 'float-popup';
-      popup.innerText = 'good girl';
+      popup.innerText = 'good girl ♥︎';
       
       container.appendChild(popup);
 
