@@ -40,40 +40,11 @@
       font-size: 1.2rem;
       color: #1d3557;
       margin-top: 10px;
-      margin-bottom: 20px;
+      margin-bottom: 25px; /* Increased margin since button is gone */
       text-transform: uppercase;
       letter-spacing: 1px;
     }
     
-    .meds-btn {
-      font-size: 0.9rem;
-      background-color: #1d3557; /* Deep Navy theme */
-      color: white;
-      border: none;
-      width: auto; /* Fits text tightly */
-      display: inline-block;
-      padding: 10px 18px;
-      border-radius: 25px;
-      cursor: pointer;
-      font-weight: bold;
-      margin-bottom: 10px;
-      transition: background-color 0.2s, transform 0.1s;
-    }
-
-    .meds-btn:active {
-      transform: scale(0.98);
-      background-color: #457b9d;
-    }
-
-    .status-msg {
-      font-size: 0.95rem;
-      color: #1d3557;
-      font-weight: bold;
-      display: none;
-      margin-bottom: 15px;
-      animation: fadeIn 0.5s ease-in-out;
-    }
-
     /* Weekly Tracker Styles */
     .weekly-tracker-container {
       margin-bottom: 25px;
@@ -129,8 +100,9 @@
     }
 
     .day-checkbox.checked {
-      background-color: #2a9d8f;
-      border-color: #2a9d8f;
+      /* Color updated to match the 'good girl' button theme */
+      background-color: #457b9d; 
+      border-color: #457b9d;
     }
 
     .day-checkbox.checked::after {
@@ -147,12 +119,7 @@
       color: #8d99ae;
       text-decoration: underline;
       cursor: pointer;
-      margin-top: 8px;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-5px); }
-      to { opacity: 1; transform: translateY(0); }
+      margin-top: 10px;
     }
 
     /* Clean Styled Quote Box */
@@ -210,18 +177,13 @@
     <!-- Header Image -->
     <img src="./header.png" alt="Header Image" class="header-image">
 
-    <!-- Meds Taken Button (Under header, above h1) -->
-    <div>
-      <button onclick="triggerCelebration()" id="takenBtn" class="meds-btn">→ Meds taken! ←</button>
-      <div id="statusMsg" class="status-msg">Text me to let me know please ♥︎</div>
-    </div>
-
+    <!-- Preserved Header Text -->
     <h1>I'm proud of you! I love you Naomi.</h1>
 
     <!-- Weekly Checklist Tracker -->
     <div class="weekly-tracker-container">
       <div class="tracker-title">Weekly Tracker</div>
-      <div class="weekly-tracker">
+      <div class="weekly-tracker" id="tracker">
         <div class="day-box" onclick="toggleDay('Mon')"><span class="day-label">M</span><div class="day-checkbox" id="check-Mon"></div></div>
         <div class="day-box" onclick="toggleDay('Tue')"><span class="day-label">T</span><div class="day-checkbox" id="check-Tue"></div></div>
         <div class="day-box" onclick="toggleDay('Wed')"><span class="day-label">W</span><div class="day-checkbox" id="check-Wed"></div></div>
@@ -240,6 +202,7 @@
 
     <button onclick="getRandomQuote()" class="refresh-btn" title="New Quote">⟳</button>
 
+    <!-- Preserved Footer Text -->
     <div class="footer">Stay consistent, you got this! <br> - Catarina ♥︎ </div>
   </div>
 
@@ -275,7 +238,7 @@
         },
         body: JSON.stringify(weekData)
       })
-      .then(() => updateTrackerUI())
+      // UI is already updated, we just save silently in the background
       .catch(err => console.error("Error saving tracker:", err));
     }
 
@@ -293,9 +256,21 @@
     }
 
     function toggleDay(day) {
-      weekData[day] = !weekData[day];
+      const willBeChecked = !weekData[day];
+      weekData[day] = willBeChecked;
+      
+      // 1. Instantly show the change
       updateTrackerUI();
-      saveTracker();
+
+      // 2. If she is checking a box, trigger confetti and delay the save slightly
+      // This makes the UI feel more responsive during the celebration.
+      if (willBeChecked) {
+        triggerConfettiOnTracker();
+        setTimeout(saveTracker, 800); // Save after confetti starts
+      } else {
+        // If unchecking, save instantly
+        saveTracker();
+      }
     }
 
     function resetWeek() {
@@ -304,6 +279,29 @@
         updateTrackerUI();
         saveTracker();
       }
+    }
+
+    function triggerConfettiOnTracker() {
+      const trackerEl = document.getElementById('tracker');
+      const rect = trackerEl.getBoundingClientRect();
+      
+      // Calculate the center of the weekly tracker component
+      const centerX = (rect.left + rect.right) / 2;
+      const centerY = (rect.top + rect.bottom) / 2;
+
+      // Convert pixel center to confetti coordinate system (0 to 1)
+      const originX = centerX / window.innerWidth;
+      const originY = centerY / window.innerHeight;
+
+      // Launch Confetti from the tracker's location
+      confetti({
+        particleCount: 80,
+        spread: 60,
+        origin: { x: originX, y: originY },
+        ticks: 200, // how long particles last
+        gravity: 1.2, // slightly heavier confetti for a tighter blast
+        disableForReducedMotion: true // respect system settings
+      });
     }
 
     const quotes = [
@@ -390,23 +388,6 @@
 
       currentQuoteIndex = newIndex;
       document.getElementById('quoteBox').innerText = `"${quotes[currentQuoteIndex]}"`;
-    }
-
-    function triggerCelebration() {
-      // Launch Confetti
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 }
-      });
-
-      // Update UI
-      const btn = document.getElementById('takenBtn');
-      const msg = document.getElementById('statusMsg');
-
-      btn.innerText = "good girl";
-      btn.style.backgroundColor = "#457b9d";
-      msg.style.display = "block";
     }
 
     // Initialize
